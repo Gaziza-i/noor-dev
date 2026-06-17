@@ -489,6 +489,10 @@
       transition: border-color 0.2s;
     }
     .service-card:hover { border-color: rgba(78,204,163,0.25); }
+    .service-card.featured {
+      border-color: rgba(78,204,163,0.3);
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(78,204,163,0.05) 100%);
+    }
 
     .service-icon {
       width: 40px; height: 40px;
@@ -512,77 +516,30 @@
       color: var(--muted);
       font-size: 0.87rem;
       line-height: 1.6;
+      flex: 1;
     }
-
-    /* ── PRICING ── */
-    #pricing {
-      border-top: 1px solid var(--border);
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .pricing-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.8rem;
-      display: flex; flex-direction: column;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .pricing-card:hover {
-      border-color: rgba(78,204,163,0.25);
-      transform: translateY(-3px);
-    }
-    .pricing-card.featured {
-      border-color: rgba(78,204,163,0.3);
-      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(78,204,163,0.05) 100%);
-    }
-
-    .pricing-icon {
-      width: 32px; height: 32px;
-      margin-bottom: 0.8rem;
-    }
-    .pricing-icon svg {
-      width: 32px; height: 32px;
-      stroke: var(--accent);
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .pricing-name {
-      font-family: var(--font-head);
-      font-weight: 600;
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-    }
-    .pricing-price {
+    .service-price {
       font-family: var(--font-head);
       font-weight: 800;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color: var(--accent);
-      margin-bottom: 0.6rem;
+      margin-top: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--border);
     }
-    .pricing-price span {
-      font-size: 0.85rem;
+    .service-price span {
+      font-size: 0.8rem;
       font-weight: 400;
       color: var(--muted);
     }
-    .pricing-details {
-      color: var(--muted);
-      font-size: 0.82rem;
-      line-height: 1.6;
-      flex: 1;
-    }
-    .pricing-note {
+    .services-note {
       color: var(--muted);
       font-size: 0.85rem;
       margin-top: 2rem;
       text-align: center;
+    }
+    .service-card {
+      display: flex; flex-direction: column;
     }
 
     /* ── CONTACT ── */
@@ -684,8 +641,7 @@
         <li><a href="#about">Обо мне</a></li>
         <li><a href="#skills">Навыки</a></li>
         <li><a href="#projects">Проекты</a></li>
-        <li><a href="#services">Услуги</a></li>
-        <li><a href="#pricing">Цены</a></li>
+        <li><a href="#services">Услуги и цены</a></li>
         <li><a href="#contact">Контакт</a></li>
       </ul>
       <button class="burger" aria-label="Меню">
@@ -871,72 +827,40 @@
     </div>
   </section>
 
-  <!-- SERVICES -->
+  <!-- SERVICES & PRICING -->
   <section id="services">
     <div class="container">
       <div class="section-header fade-up">
-        <div class="section-label">Услуги</div>
+        <div class="section-label">Услуги и цены</div>
         <h2 class="section-title">Что я делаю</h2>
       </div>
       <div class="services-grid">
         <div class="service-card fade-up">
           <div class="service-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
           <div class="service-name">Лендинги и сайты-визитки</div>
-          <p class="service-desc">Одностраничные сайты для бизнеса, специалистов и стартапов. Быстро, адаптивно, без лишнего.</p>
+          <p class="service-desc">Одностраничные сайты для бизнеса, специалистов и стартапов. До 5 секций, адаптивная вёрстка, форма обратной связи.</p>
+          <div class="service-price">от 5 000 ₽</div>
+        </div>
+        <div class="service-card featured fade-up">
+          <div class="service-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg></div>
+          <div class="service-name">Интернет-магазин</div>
+          <p class="service-desc">Каталог товаров, корзина, система оплаты, админ-панель для управления контентом.</p>
+          <div class="service-price">от 15 000 ₽</div>
         </div>
         <div class="service-card fade-up">
           <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
           <div class="service-name">Вёрстка по макету</div>
           <p class="service-desc">Перевожу Figma или готовый дизайн в рабочий HTML/CSS. Точно и аккуратно.</p>
+          <div class="service-price">от 3 000 ₽ <span>/ страница</span></div>
         </div>
         <div class="service-card fade-up">
           <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
           <div class="service-name">Доработка и улучшение</div>
           <p class="service-desc">Исправлю баги, улучшу дизайн, добавлю новые секции на ваш существующий сайт.</p>
-        </div>
-        <div class="service-card fade-up">
-          <div class="service-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
-          <div class="service-name">Готовые шаблоны</div>
-          <p class="service-desc">Быстро настрою и кастомизирую HTML-шаблон под ваш бренд и задачи.</p>
+          <div class="service-price">от 1 500 ₽</div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section id="pricing">
-    <div class="container">
-      <div class="section-header fade-up">
-        <div class="section-label">Стоимость</div>
-        <h2 class="section-title">Цены</h2>
-      </div>
-      <div class="pricing-grid">
-        <div class="pricing-card fade-up">
-          <div class="pricing-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-          <div class="pricing-name">Лендинг / сайт-визитка</div>
-          <div class="pricing-price">от 5 000 ₽</div>
-          <p class="pricing-details">Одностраничный сайт, до 5 секций, адаптивная вёрстка, форма обратной связи</p>
-        </div>
-        <div class="pricing-card featured fade-up">
-          <div class="pricing-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg></div>
-          <div class="pricing-name">Интернет-магазин</div>
-          <div class="pricing-price">от 15 000 ₽</div>
-          <p class="pricing-details">Каталог товаров, корзина, система оплаты, админ-панель для управления</p>
-        </div>
-        <div class="pricing-card fade-up">
-          <div class="pricing-icon"><svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <div class="pricing-name">Вёрстка по макету</div>
-          <div class="pricing-price">от 3 000 ₽ <span>/ страница</span></div>
-          <p class="pricing-details">Перевод дизайна из Figma в рабочий HTML/CSS, точно и аккуратно</p>
-        </div>
-        <div class="pricing-card fade-up">
-          <div class="pricing-icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
-          <div class="pricing-name">Доработка сайта</div>
-          <div class="pricing-price">от 1 500 ₽</div>
-          <p class="pricing-details">Исправление багов, новые секции, улучшение дизайна, адаптив</p>
-        </div>
-      </div>
-      <p class="pricing-note fade-up">Точная стоимость зависит от объёма задачи — напишите, обсудим</p>
+      <p class="services-note fade-up">Точная стоимость зависит от объёма задачи — напишите, обсудим</p>
     </div>
   </section>
 

@@ -385,6 +385,42 @@
     }
     .project-card:hover::before { opacity: 1; }
 
+    .project-preview {
+      height: 140px;
+      border-radius: 12px;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-preview::after {
+      content: '';
+      position: absolute; inset: 0;
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      pointer-events: none;
+    }
+    .preview-cleaning {
+      background: linear-gradient(135deg, #0d2818 0%, #1a4a2e 50%, #0f3d1f 100%);
+    }
+    .preview-dua {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    .preview-shop {
+      background: linear-gradient(135deg, #2d1b36 0%, #1a1a2e 50%, #162447 100%);
+    }
+    .preview-label {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.7);
+      z-index: 1;
+    }
+
     .project-tag {
       font-size: 0.72rem;
       font-weight: 600;
@@ -565,10 +601,10 @@
         <div class="hero-text">
           <div class="hero-tag">Открыта для заказов</div>
           <h1 class="hero-title">
-            Веб-разработчик<br /><span class="accent">· вайб-кодер</span>
+            Сделаю сайт<br /><span class="accent">для вашего бизнеса</span>
           </h1>
           <p class="hero-sub">
-            Верстаю современные сайты — чистые, быстрые, удобные. Работаю удалённо, использую AI-инструменты для скорости и качества.
+            Быстро, чисто, адаптивно. Лендинги, интернет-магазины, админ-панели. Работаю удалённо, использую AI-инструменты для скорости и качества.
           </p>
           <a href="#projects" class="hero-cta">
             Посмотреть работы
@@ -580,7 +616,7 @@
           <div class="hero-card">
             <div class="code-line"><span class="kw">const</span> <span class="fn">dev</span> = {</div>
             <div class="code-line" style="padding-left:1.2em"><span class="str">name</span>: <span class="str">"noor.dev"</span>,</div>
-            <div class="code-line" style="padding-left:1.2em"><span class="str">stack</span>: [<span class="str">"HTML"</span>, <span class="str">"CSS"</span>, <span class="str">"JS"</span>],</div>
+            <div class="code-line" style="padding-left:1.2em"><span class="str">stack</span>: [<span class="str">"React"</span>, <span class="str">"TS"</span>, <span class="str">"Tailwind"</span>],</div>
             <div class="code-line" style="padding-left:1.2em"><span class="str">ai</span>: <span class="str">true</span>,</div>
             <div class="code-line" style="padding-left:1.2em"><span class="str">remote</span>: <span class="str">true</span>,</div>
             <div class="code-line" style="padding-left:1.2em"><span class="str">available</span>: <span class="str">true</span> <span class="cm">✓</span></div>
@@ -605,8 +641,8 @@
         </div>
         <div class="about-stats">
           <div class="stat-card">
-            <div class="stat-num">3+</div>
-            <div class="stat-label">готовых проекта в портфолио</div>
+            <div class="stat-num">3</div>
+            <div class="stat-label">проекта с нуля: лендинг, каталог, магазин</div>
           </div>
           <div class="stat-card">
             <div class="stat-num">100%</div>
@@ -642,20 +678,44 @@
           <span class="skill-name">JavaScript ES6+</span>
         </div>
         <div class="skill-item fade-up">
+          <div class="skill-icon">🔷</div>
+          <span class="skill-name">TypeScript</span>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-icon">⚛️</div>
+          <span class="skill-name">React</span>
+        </div>
+        <div class="skill-item fade-up">
           <div class="skill-icon">🎨</div>
           <span class="skill-name">Tailwind CSS</span>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-icon">🟢</div>
+          <span class="skill-name">Node.js</span>
         </div>
         <div class="skill-item fade-up">
           <div class="skill-icon">📱</div>
           <span class="skill-name">Адаптивная вёрстка</span>
         </div>
         <div class="skill-item fade-up">
-          <div class="skill-icon">🤖</div>
-          <span class="skill-name">Lovable / Manus AI</span>
+          <div class="skill-icon">🎯</div>
+          <span class="skill-name">Figma</span>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-icon">🔗</div>
+          <span class="skill-name">REST API</span>
         </div>
         <div class="skill-item fade-up">
           <div class="skill-icon">🚀</div>
-          <span class="skill-name">GitHub / Vercel</span>
+          <span class="skill-name">Git / GitHub / Vercel</span>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-icon">🤖</div>
+          <span class="skill-name">Cursor / Claude AI</span>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-icon">✨</div>
+          <span class="skill-name">Lovable / Manus AI</span>
         </div>
       </div>
     </div>
@@ -670,28 +730,28 @@
       </div>
       <div class="projects-grid">
         <div class="project-card fade-up">
-          <div class="project-tag">HTML/CSS · Lovable · UI/UX</div>
-          <div class="project-name">Чистарт — клининг в Казани</div>
-          <p class="project-desc">Лендинг для сервиса профессионального клининга. Адаптивная вёрстка, формы захвата заявок и высокая скорость загрузки.</p>
-          <a href="https://chistart-kazan.lovable.app/" class="project-link" target="_blank" rel="noopener">
-            Посмотреть сайт →
-          </a>
+          <div class="project-preview preview-cleaning">
+            <span class="preview-label">🧹 Клининг</span>
+          </div>
+          <div class="project-tag">Дизайн · Вёрстка · Админ-панель</div>
+          <div class="project-name">Сайт клининговой компании</div>
+          <p class="project-desc">От идеи до реализации: дизайн и вёрстка лендинга с формами заявок + админ-панель для обработки обращений. Адаптивная вёрстка, высокая скорость загрузки.</p>
         </div>
         <div class="project-card fade-up">
-          <div class="project-tag">HTML/CSS · Manus AI · Арабский</div>
+          <div class="project-preview preview-dua">
+            <span class="preview-label">📖 Дуа</span>
+          </div>
+          <div class="project-tag">Manus AI · Поиск · Мультиязычность</div>
           <div class="project-name">Дуа из Корана</div>
-          <p class="project-desc">Каталог коранических молитв с переводом. Поиск по смыслу, фильтрация, переключение языка (русский/арабский), тёмная тема.</p>
-          <a href="https://quranicduas-krqqdlfv.manus.space/" class="project-link" target="_blank" rel="noopener">
-            Посмотреть сайт →
-          </a>
+          <p class="project-desc">Каталог коранических молитв с переводом, созданный с нуля на Manus AI. Поиск по смыслу, фильтрация, переключение языка (русский/арабский), тёмная тема.</p>
         </div>
         <div class="project-card fade-up">
-          <div class="project-tag">Веб-сервис</div>
-          <div class="project-name">Tansylate</div>
-          <p class="project-desc">Веб-проект с полноценным доменом. Участие в разработке и вёрстке в рамках коммерческого проекта.</p>
-          <a href="https://tansylate.ru/" class="project-link" target="_blank" rel="noopener">
-            Посмотреть сайт →
-          </a>
+          <div class="project-preview preview-shop">
+            <span class="preview-label">🛒 Магазин</span>
+          </div>
+          <div class="project-tag">React · Node.js · Telegram-оплата</div>
+          <div class="project-name">Tansylate — интернет-магазин</div>
+          <p class="project-desc">Дизайн и вёрстка интернет-магазина: каталог товаров с корзиной, оплата через Telegram-чат с менеджером, админ-панель для управления каталогом.</p>
         </div>
       </div>
     </div>
@@ -788,14 +848,14 @@
 
     // Smooth nav active state
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
+    const allNavLinks = document.querySelectorAll('.nav-links a');
 
     window.addEventListener('scroll', () => {
       let current = '';
       sections.forEach(s => {
         if (window.scrollY >= s.offsetTop - 120) current = s.id;
       });
-      navLinks.forEach(a => {
+      allNavLinks.forEach(a => {
         a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--text)' : '';
       });
     });

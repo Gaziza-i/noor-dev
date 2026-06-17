@@ -388,16 +388,20 @@
     .project-card:hover::before { opacity: 1; }
 
     .project-preview {
-      height: 140px;
+      height: 180px;
       border-radius: 12px;
       margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
       position: relative;
       overflow: hidden;
     }
+    .project-preview img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: opacity 0.4s;
+    }
+    .project-preview img.slide-hidden { opacity: 0; position: absolute; top: 0; left: 0; }
+    .project-preview img.slide-visible { opacity: 1; }
     .project-preview::after {
       content: '';
       position: absolute; inset: 0;
@@ -405,22 +409,28 @@
       border-radius: 12px;
       pointer-events: none;
     }
-    .preview-cleaning {
-      background: linear-gradient(135deg, #0d2818 0%, #1a4a2e 50%, #0f3d1f 100%);
+    .preview-dots {
+      position: absolute; bottom: 8px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 5px; z-index: 2;
     }
-    .preview-dua {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    .preview-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: background 0.2s;
     }
+    .preview-dot.active { background: var(--accent); }
     .preview-shop {
       background: linear-gradient(135deg, #2d1b36 0%, #1a1a2e 50%, #162447 100%);
+      display: flex; align-items: center; justify-content: center; height: 180px;
     }
     .preview-label {
       font-family: var(--font-head);
       font-size: 0.85rem;
       font-weight: 700;
-      letter-spacing: 0.02em;
       color: rgba(255,255,255,0.7);
-      z-index: 1;
     }
 
     .project-tag {
@@ -797,16 +807,30 @@
       </div>
       <div class="projects-grid">
         <div class="project-card fade-up">
-          <div class="project-preview preview-cleaning">
-            <span class="preview-label">🧹 Клининг</span>
+          <div class="project-preview" data-slideshow>
+            <img src="cleaning-main-light.png" alt="Клининг — светлая тема" class="slide-visible" />
+            <img src="cleaning-main-dark.png" alt="Клининг — тёмная тема" class="slide-hidden" />
+            <img src="cleaning-admin-light.png" alt="Админка — светлая" class="slide-hidden" />
+            <img src="cleaning-admin-dark.png" alt="Админка — тёмная" class="slide-hidden" />
+            <div class="preview-dots">
+              <span class="preview-dot active"></span>
+              <span class="preview-dot"></span>
+              <span class="preview-dot"></span>
+              <span class="preview-dot"></span>
+            </div>
           </div>
           <div class="project-tag">Дизайн · Вёрстка · Админ-панель</div>
           <div class="project-name">Сайт клининговой компании</div>
-          <p class="project-desc">От идеи до реализации: дизайн и вёрстка лендинга с формами заявок + админ-панель для обработки обращений. Адаптивная вёрстка, высокая скорость загрузки.</p>
+          <p class="project-desc">От идеи до реализации: дизайн и вёрстка лендинга с формами заявок + админ-панель для обработки обращений. Светлая и тёмная тема.</p>
         </div>
         <div class="project-card fade-up">
-          <div class="project-preview preview-dua">
-            <span class="preview-label">📖 Дуа</span>
+          <div class="project-preview" data-slideshow>
+            <img src="dua-arabic.png" alt="Дуа — арабский" class="slide-visible" />
+            <img src="dua-russian.png" alt="Дуа — русский перевод" class="slide-hidden" />
+            <div class="preview-dots">
+              <span class="preview-dot active"></span>
+              <span class="preview-dot"></span>
+            </div>
           </div>
           <div class="project-tag">Manus AI · Поиск · Мультиязычность</div>
           <div class="project-name">Дуа из Корана</div>
@@ -948,6 +972,22 @@
         burger.classList.remove('active');
         navLinks.classList.remove('open');
       });
+    });
+
+    // Project slideshows
+    document.querySelectorAll('[data-slideshow]').forEach(container => {
+      const imgs = container.querySelectorAll('img');
+      const dots = container.querySelectorAll('.preview-dot');
+      let current = 0;
+      function showSlide(i) {
+        imgs.forEach(img => { img.className = 'slide-hidden'; });
+        dots.forEach(dot => { dot.classList.remove('active'); });
+        imgs[i].className = 'slide-visible';
+        dots[i].classList.add('active');
+        current = i;
+      }
+      dots.forEach((dot, i) => dot.addEventListener('click', () => showSlide(i)));
+      setInterval(() => showSlide((current + 1) % imgs.length), 3000);
     });
 
     // Smooth nav active state

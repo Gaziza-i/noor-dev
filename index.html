@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>noor.dev | веб-разработчик</title>
-  <meta name="description" content="Проектирую и разрабатываю современные веб-интерфейсы с фокусом на функциональность и минимализм." />
+  <title>noor.dev | Веб-разработка на заказ — лендинги, магазины, вёрстка</title>
+  <meta name="description" content="Сделаю сайт для вашего бизнеса — быстро, чисто, адаптивно. Лендинги, интернет-магазины, вёрстка по макету. Казань · удалённо по всей России." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -487,6 +487,69 @@
       line-height: 1.6;
     }
 
+    /* ── PRICING ── */
+    #pricing {
+      border-top: 1px solid var(--border);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.8rem;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .pricing-card:hover {
+      border-color: rgba(78,204,163,0.25);
+      transform: translateY(-3px);
+    }
+    .pricing-card.featured {
+      border-color: rgba(78,204,163,0.3);
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(78,204,163,0.05) 100%);
+    }
+
+    .pricing-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+    }
+    .pricing-name {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .pricing-price {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .pricing-price span {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .pricing-details {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      flex: 1;
+    }
+    .pricing-note {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
     /* ── CONTACT ── */
     #contact {
       border-top: 1px solid var(--border);
@@ -586,6 +649,7 @@
         <li><a href="#skills">Навыки</a></li>
         <li><a href="#projects">Проекты</a></li>
         <li><a href="#services">Услуги</a></li>
+        <li><a href="#pricing">Цены</a></li>
         <li><a href="#contact">Контакт</a></li>
       </ul>
       <button class="burger" aria-label="Меню">
@@ -789,6 +853,43 @@
     </div>
   </section>
 
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-label">Стоимость</div>
+        <h2 class="section-title">Цены</h2>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card fade-up">
+          <div class="pricing-icon">🖥️</div>
+          <div class="pricing-name">Лендинг / сайт-визитка</div>
+          <div class="pricing-price">от 5 000 ₽</div>
+          <p class="pricing-details">Одностраничный сайт, до 5 секций, адаптивная вёрстка, форма обратной связи</p>
+        </div>
+        <div class="pricing-card featured fade-up">
+          <div class="pricing-icon">🛒</div>
+          <div class="pricing-name">Интернет-магазин</div>
+          <div class="pricing-price">от 15 000 ₽</div>
+          <p class="pricing-details">Каталог товаров, корзина, система оплаты, админ-панель для управления</p>
+        </div>
+        <div class="pricing-card fade-up">
+          <div class="pricing-icon">🎨</div>
+          <div class="pricing-name">Вёрстка по макету</div>
+          <div class="pricing-price">от 3 000 ₽ <span>/ страница</span></div>
+          <p class="pricing-details">Перевод дизайна из Figma в рабочий HTML/CSS, точно и аккуратно</p>
+        </div>
+        <div class="pricing-card fade-up">
+          <div class="pricing-icon">🔧</div>
+          <div class="pricing-name">Доработка сайта</div>
+          <div class="pricing-price">от 1 500 ₽</div>
+          <p class="pricing-details">Исправление багов, новые секции, улучшение дизайна, адаптив</p>
+        </div>
+      </div>
+      <p class="pricing-note fade-up">Точная стоимость зависит от объёма задачи — напишите, обсудим</p>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact">
     <div class="container">
@@ -813,7 +914,7 @@
   <footer>
     <div class="container">
       <div class="footer-logo"><span>noor</span>.dev</div>
-      <p>© 2025 · вёрстка с ❤️ и вайбом</p>
+      <p>© 2026 noor.dev — Казань · удалённо по всей России</p>
     </div>
   </footer>
 

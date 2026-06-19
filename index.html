@@ -624,13 +624,13 @@
       display: flex; align-items: center; justify-content: center;
       opacity: 0; pointer-events: none;
       transition: opacity 0.3s;
-      cursor: zoom-out;
     }
     .lightbox.open { opacity: 1; pointer-events: auto; }
     .lightbox img {
-      max-width: 90vw; max-height: 90vh;
+      max-width: 85vw; max-height: 85vh;
       border-radius: 12px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      transition: opacity 0.3s;
     }
     .lightbox-close {
       position: absolute; top: 1.5rem; right: 1.5rem;
@@ -639,12 +639,37 @@
       border: 1px solid rgba(255,255,255,0.15);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
+      cursor: pointer; z-index: 210;
     }
     .lightbox-close svg {
       width: 18px; height: 18px;
       stroke: #fff; fill: none;
       stroke-width: 2; stroke-linecap: round;
+    }
+    .lightbox-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 210;
+      transition: background 0.2s;
+    }
+    .lightbox-arrow:hover { background: rgba(255,255,255,0.15); }
+    .lightbox-arrow svg {
+      width: 20px; height: 20px;
+      stroke: #fff; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .lightbox-prev { left: 1.5rem; }
+    .lightbox-next { right: 1.5rem; }
+    .lightbox-counter {
+      position: absolute; bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.5);
+      font-size: 0.85rem;
+      font-family: var(--font-body);
     }
 
     .project-preview { cursor: zoom-in; }
@@ -963,7 +988,10 @@
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <button class="lightbox-arrow lightbox-prev"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
     <img src="" alt="" id="lightbox-img" />
+    <button class="lightbox-arrow lightbox-next"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
   </div>
 
   <!-- FOOTER -->
@@ -1001,19 +1029,52 @@
       });
     });
 
-    // ── 3. Lightbox ──
+    // ── 3. Lightbox with gallery ──
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
-    document.querySelectorAll('.project-preview img').forEach(img => {
-      img.addEventListener('click', () => {
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
-        lightbox.classList.add('open');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    let lbImages = [];
+    let lbIndex = 0;
+
+    function lbShow(index) {
+      lbIndex = (index + lbImages.length) % lbImages.length;
+      lightboxImg.src = lbImages[lbIndex].src;
+      lightboxImg.alt = lbImages[lbIndex].alt;
+      lightboxCounter.textContent = `${lbIndex + 1} / ${lbImages.length}`;
+    }
+
+    document.querySelectorAll('.project-preview').forEach(preview => {
+      const imgs = preview.querySelectorAll('img');
+      imgs.forEach((img, i) => {
+        img.addEventListener('click', () => {
+          lbImages = Array.from(imgs);
+          lbShow(i);
+          lightbox.classList.add('open');
+        });
       });
     });
+
+    document.querySelector('.lightbox-prev').addEventListener('click', (e) => {
+      e.stopPropagation(); lbShow(lbIndex - 1);
+    });
+    document.querySelector('.lightbox-next').addEventListener('click', (e) => {
+      e.stopPropagation(); lbShow(lbIndex + 1);
+    });
+    lightboxImg.addEventListener('click', (e) => e.stopPropagation());
     lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
     document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
       if (e.key === 'Escape') lightbox.classList.remove('open');
+      if (e.key === 'ArrowLeft') lbShow(lbIndex - 1);
+      if (e.key === 'ArrowRight') lbShow(lbIndex + 1);
+    });
+
+    // Touch swipe
+    let touchStartX = 0;
+    lightbox.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+    lightbox.addEventListener('touchend', e => {
+      const diff = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(diff) > 50) lbShow(lbIndex + (diff > 0 ? -1 : 1));
     });
 
     // ── 4. Project slideshows ──

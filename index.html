@@ -64,9 +64,15 @@
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
       padding: 1.2rem 0;
+      background: transparent;
+      backdrop-filter: blur(0px);
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+    }
+    nav.scrolled {
       background: rgba(12,12,11,0.85);
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
+      border-bottom-color: var(--border);
     }
 
     nav .container {
@@ -643,6 +649,44 @@
 
     .project-preview { cursor: zoom-in; }
 
+    /* ── TYPING EFFECT ── */
+    .typing-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      background: var(--accent);
+      margin-left: 4px;
+      animation: blink 0.8s infinite;
+      vertical-align: text-bottom;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ── HOVER EFFECTS ── */
+    .project-preview img {
+      transition: opacity 0.4s, transform 0.4s;
+    }
+    .project-card:hover .project-preview img.slide-visible {
+      transform: scale(1.05);
+    }
+    .service-icon svg,
+    .skill-icon svg {
+      transition: transform 0.3s;
+    }
+    .service-card:hover .service-icon svg {
+      transform: rotate(8deg) scale(1.15);
+    }
+    .skill-item:hover .skill-icon svg {
+      transform: scale(1.2);
+    }
+
+    /* ── COUNTER ── */
+    .stat-num {
+      transition: color 0.3s;
+    }
+
     /* ── ANIMATIONS ── */
     .fade-up {
       opacity: 0;
@@ -693,16 +737,14 @@
           <h1 class="hero-title">
             Сделаю сайт<br /><span class="accent">для вашего бизнеса</span>
           </h1>
-          <p class="hero-sub">
-            Быстро, чисто, адаптивно. Лендинги, интернет-магазины, админ-панели. Работаю удалённо, использую AI-инструменты для скорости и качества.
-          </p>
+          <p class="hero-sub" id="hero-typing"></p>
           <a href="#projects" class="hero-cta">
             Посмотреть работы
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
 
-        <div class="hero-visual">
+        <div class="hero-visual" id="hero-parallax">
           <div class="hero-card">
             <div class="code-line"><span class="kw">const</span> <span class="fn">dev</span> = {</div>
             <div class="code-line" style="padding-left:1.2em"><span class="str">name</span>: <span class="str">"noor.dev"</span>,</div>
@@ -933,12 +975,10 @@
   </footer>
 
   <script>
-    // Scroll animations
+    // ── 1. Scroll fade-in animations ──
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
@@ -947,7 +987,7 @@
       observer.observe(el);
     });
 
-    // Burger menu
+    // ── 2. Burger menu ──
     const burger = document.querySelector('.burger');
     const navLinks = document.querySelector('.nav-links');
     burger.addEventListener('click', () => {
@@ -961,7 +1001,7 @@
       });
     });
 
-    // Lightbox
+    // ── 3. Lightbox ──
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     document.querySelectorAll('.project-preview img').forEach(img => {
@@ -976,7 +1016,7 @@
       if (e.key === 'Escape') lightbox.classList.remove('open');
     });
 
-    // Project slideshows
+    // ── 4. Project slideshows ──
     document.querySelectorAll('[data-slideshow]').forEach(container => {
       const imgs = container.querySelectorAll('img');
       const dots = container.querySelectorAll('.preview-dot');
@@ -992,11 +1032,16 @@
       setInterval(() => showSlide((current + 1) % imgs.length), 3000);
     });
 
-    // Smooth nav active state
+    // ── 5. Nav scroll effect (transparent → solid) ──
+    const nav = document.querySelector('nav');
     const sections = document.querySelectorAll('section[id]');
     const allNavLinks = document.querySelectorAll('.nav-links a');
 
     window.addEventListener('scroll', () => {
+      // Nav background
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+
+      // Active link
       let current = '';
       sections.forEach(s => {
         if (window.scrollY >= s.offsetTop - 120) current = s.id;
@@ -1004,7 +1049,59 @@
       allNavLinks.forEach(a => {
         a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--text)' : '';
       });
+
+      // Parallax
+      const parallax = document.getElementById('hero-parallax');
+      if (parallax) {
+        parallax.style.transform = `translateY(${window.scrollY * 0.15}px)`;
+      }
     });
+
+    // ── 6. Typing effect ──
+    (function() {
+      const el = document.getElementById('hero-typing');
+      const text = 'Быстро, чисто, адаптивно. Лендинги, интернет-магазины, админ-панели. Работаю удалённо, использую AI-инструменты для скорости и качества.';
+      let i = 0;
+      const cursor = document.createElement('span');
+      cursor.className = 'typing-cursor';
+      el.appendChild(cursor);
+
+      function type() {
+        if (i < text.length) {
+          el.insertBefore(document.createTextNode(text[i]), cursor);
+          i++;
+          setTimeout(type, 25 + Math.random() * 25);
+        } else {
+          setTimeout(() => cursor.remove(), 2000);
+        }
+      }
+      setTimeout(type, 600);
+    })();
+
+    // ── 7. Counter animation ──
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const text = el.textContent.trim();
+        const num = parseInt(text);
+        if (isNaN(num)) return;
+        const suffix = text.replace(String(num), '');
+        let current = 0;
+        const step = Math.ceil(num / 40);
+        const interval = setInterval(() => {
+          current += step;
+          if (current >= num) {
+            current = num;
+            clearInterval(interval);
+          }
+          el.textContent = current + suffix;
+        }, 30);
+        counterObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-num').forEach(el => counterObserver.observe(el));
   </script>
 </body>
 </html>

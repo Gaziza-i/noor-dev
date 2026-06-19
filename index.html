@@ -1044,13 +1044,14 @@
     }
 
     document.querySelectorAll('.project-preview').forEach(preview => {
-      const imgs = preview.querySelectorAll('img');
-      imgs.forEach((img, i) => {
-        img.addEventListener('click', () => {
-          lbImages = Array.from(imgs);
-          lbShow(i);
-          lightbox.classList.add('open');
-        });
+      const imgs = Array.from(preview.querySelectorAll('img'));
+      if (!imgs.length) return;
+      preview.addEventListener('click', (e) => {
+        if (e.target.closest('.preview-dots')) return;
+        lbImages = imgs;
+        const visible = imgs.findIndex(img => img.classList.contains('slide-visible'));
+        lbShow(visible >= 0 ? visible : 0);
+        lightbox.classList.add('open');
       });
     });
 

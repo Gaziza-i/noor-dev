@@ -108,63 +108,61 @@
       border: none;
       cursor: pointer;
       padding: 4px;
-      z-index: 110;
     }
     .burger span {
       width: 22px; height: 2px;
       background: var(--text);
       border-radius: 2px;
       transition: transform 0.3s, opacity 0.3s;
+      display: block;
     }
     .burger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .burger.active span:nth-child(2) { opacity: 0; }
     .burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+    /* ── MOBILE DRAWER ── */
+    .nav-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 200;
+    }
+    .nav-overlay.open { display: block; }
+
     @media (max-width: 768px) {
-      .burger { display: flex; z-index: 120; }
+      .burger { display: flex; }
+
       .nav-links {
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         position: fixed;
         top: 0; left: 0;
-        width: 75vw; max-width: 300px; height: 100%;
+        width: 260px;
+        height: 100dvh;
         background: #111110;
         border-right: 1px solid var(--border);
-        justify-content: flex-start;
         align-items: flex-start;
+        justify-content: flex-start;
         gap: 0;
-        padding: 5rem 0 2rem;
-        opacity: 0;
-        pointer-events: none;
+        padding-top: 5rem;
         transform: translateX(-100%);
-        transition: opacity 0.3s, transform 0.3s;
-        z-index: 115;
+        transition: transform 0.3s ease;
+        z-index: 201;
         overflow-y: auto;
+        list-style: none;
       }
-      .nav-links.open {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateX(0);
-      }
+      .nav-links.open { transform: translateX(0); }
+
       .nav-links li { width: 100%; }
       .nav-links a {
         display: block;
         font-size: 1rem;
-        color: var(--text);
-        padding: 1rem 2rem;
+        color: var(--muted);
+        padding: 1rem 1.5rem;
         border-bottom: 1px solid var(--border);
-        width: 100%;
+        transition: color 0.2s, background 0.2s;
       }
-      .nav-links a:hover { background: var(--bg-hover); color: var(--accent); }
-
-      /* Overlay behind drawer */
-      .nav-overlay {
-        display: none;
-        position: fixed; inset: 0;
-        background: rgba(0,0,0,0.5);
-        z-index: 114;
-      }
-      .nav-overlay.open { display: block; }
+      .nav-links a:hover { color: var(--accent); background: rgba(78,204,163,0.04); }
     }
 
     /* ── HERO ── */

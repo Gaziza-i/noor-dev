@@ -121,32 +121,50 @@
     .burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     @media (max-width: 768px) {
-      .burger {
-        display: flex;
-        position: relative;
-        z-index: 120;
-      }
-      .burger.active { position: fixed; top: 1.4rem; right: 2rem; }
+      .burger { display: flex; z-index: 120; }
       .nav-links {
         display: flex;
         flex-direction: column;
         position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(12,12,11,0.97);
-        backdrop-filter: blur(20px);
-        justify-content: center;
-        align-items: center;
-        gap: 2.5rem;
+        top: 0; left: 0;
+        width: 75vw; max-width: 300px; height: 100%;
+        background: #111110;
+        border-right: 1px solid var(--border);
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 0;
+        padding: 5rem 0 2rem;
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.3s;
+        transform: translateX(-100%);
+        transition: opacity 0.3s, transform 0.3s;
         z-index: 115;
+        overflow-y: auto;
       }
       .nav-links.open {
         opacity: 1;
         pointer-events: auto;
+        transform: translateX(0);
       }
-      .nav-links a { font-size: 1.3rem; color: var(--text); }
+      .nav-links li { width: 100%; }
+      .nav-links a {
+        display: block;
+        font-size: 1rem;
+        color: var(--text);
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--border);
+        width: 100%;
+      }
+      .nav-links a:hover { background: var(--bg-hover); color: var(--accent); }
+
+      /* Overlay behind drawer */
+      .nav-overlay {
+        display: none;
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 114;
+      }
+      .nav-overlay.open { display: block; }
     }
 
     /* ── HERO ── */
@@ -741,6 +759,8 @@
 </head>
 <body>
 
+  <div class="nav-overlay" id="nav-overlay"></div>
+
   <!-- NAV -->
   <nav>
     <div class="container">
@@ -1023,15 +1043,27 @@
     // ── 2. Burger menu ──
     const burger = document.querySelector('.burger');
     const navLinks = document.querySelector('.nav-links');
+    const navOverlay = document.getElementById('nav-overlay');
+
+    function openMenu() {
+      burger.classList.add('active');
+      navLinks.classList.add('open');
+      navOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      burger.classList.remove('active');
+      navLinks.classList.remove('open');
+      navOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
     burger.addEventListener('click', () => {
-      burger.classList.toggle('active');
-      navLinks.classList.toggle('open');
+      burger.classList.contains('active') ? closeMenu() : openMenu();
     });
+    navOverlay.addEventListener('click', closeMenu);
     document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        burger.classList.remove('active');
-        navLinks.classList.remove('open');
-      });
+      link.addEventListener('click', closeMenu);
     });
 
     // ── 3. Lightbox with gallery ──
